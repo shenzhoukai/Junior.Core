@@ -1,9 +1,4 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Junior.Core.Service.Static
 {
@@ -28,7 +23,7 @@ namespace Junior.Core.Service.Static
             {
                 return string.Empty;
             }
-            return JsonConvert.SerializeObject(obj).Replace("\"","\\\"");
+            return JsonConvert.SerializeObject(obj).Replace("\"", "\\\"");
         }
         /// <summary>
         /// Json字符串转换为实体对象

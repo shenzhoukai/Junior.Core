@@ -123,7 +123,7 @@ namespace Junior.Core.Service.Static
                 if (jwtHeader.type != Const.JwtType || jwtHeader.algo != Const.JwtAlgo || DateTimeService.TsNow() > jwtHeader.expire)
                     return value;
                 JwtPayload jwtPayload = DecodeJwtPayload(strJwtToken);
-                if(!string.IsNullOrEmpty(strUniqID))
+                if (!string.IsNullOrEmpty(strUniqID))
                 {
                     if (jwtPayload.UniqID != strUniqID)
                         return value;
@@ -131,7 +131,8 @@ namespace Junior.Core.Service.Static
                 string strNewJwtToken = MakeJwtToken(jwtPayload.UserID, jwtPayload.UserName, jwtPayload.UniqID, strLoginType, jwtHeader.created);
                 if (strNewJwtToken == strJwtToken)
                     value = true;
-            }catch{}
+            }
+            catch { }
             return value;
         }
     }

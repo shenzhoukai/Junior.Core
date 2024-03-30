@@ -154,28 +154,6 @@ namespace Junior.Core.Service.Static
             }
         }
         /// <summary>
-        /// AppID加密算法
-        /// </summary>
-        /// <param name="strUniqID"></param>
-        /// <param name="strData"></param>
-        /// <returns></returns>
-        public static string EncodeAppID(string strUniqID, string strData)
-        {
-            string value = EncodeBasicCrypto(EncodeBasicCrypto(strUniqID) + EncodeBasicCrypto(strData));
-            return value;
-        }
-        /// <summary>
-        /// SecretKey加密算法
-        /// </summary>
-        /// <param name="strUniqID"></param>
-        /// <param name="strAppID"></param>
-        /// <returns></returns>
-        public static string EncodeSecretKey(string strUniqID, string strAppID)
-        {
-            string value = EncodeBasicCrypto(EncodeBasicCrypto(strUniqID) + EncodeBasicCrypto(strAppID));
-            return value;
-        }
-        /// <summary>
         /// 生成短链接
         /// </summary>
         /// <param name="strKey"></param>
@@ -195,150 +173,13 @@ namespace Junior.Core.Service.Static
             for (int i = 0; i < len; i++)
             {
                 string strChar = EncodeMD5(strKey + Guid.NewGuid().ToString()).ToUpper().Substring(i, 1);
-                while (!ValidCharIfAllow(listFilter, strChar))
+                while (!ValidService.CharIsAllow(listFilter, strChar))
                 {
                     strChar = EncodeMD5(strKey + Guid.NewGuid().ToString()).ToUpper().Substring(i, 1);
                 }
                 value += strChar;
             }
             return value;
-        }
-        /// <summary>
-        /// 验证字符是否被允许
-        /// </summary>
-        /// <param name="listFilter"></param>
-        /// <param name="strChar"></param>
-        /// <returns></returns>
-        public static bool ValidCharIfAllow(List<string> listFilter, string strChar)
-        {
-            bool charAllow = false;
-            foreach (string strFilter in listFilter)
-            {
-                if (charAllow)
-                {
-                    continue;
-                }
-                else
-                {
-                    if (strChar != strFilter)
-                    {
-                        charAllow = true;
-                    }
-                    else
-                    {
-                        continue;
-                    }
-                }
-            }
-            return charAllow;
-        }
-        /// <summary>
-        /// 生成推广码
-        /// </summary>
-        /// <param name="strUniqID"></param>
-        /// <returns></returns>
-        public static string EncodeRefCode(string strUniqID)
-        {
-            return EncodeShortUrl(strUniqID, 8);
-        }
-        /// <summary>
-        /// 生成商店ID
-        /// </summary>
-        /// <param name="strUniqID"></param>
-        /// <returns></returns>
-        public static string EncodeShopUniqID(string strUniqID)
-        {
-            return EncodeShortUrl(strUniqID, 6);
-        }
-        public static string EncodeWithdrawUniqID(string strUniqID)
-        {
-            return EncodeMD5(strUniqID + "Withdraw" + DateTimeService.Now());
-        }
-        /// <summary>
-        /// 生成插件ID
-        /// </summary>
-        /// <param name="strPmsEngName"></param>
-        /// <returns></returns>
-        public static string EncodePmsUniqID(string strPmsEngName)
-        {
-            return EncodeShortUrl(strPmsEngName, 8);
-        }
-        /// <summary>
-        /// 生成服务器连接ID
-        /// </summary>
-        /// <param name="strServerTitle"></param>
-        /// <param name="strServerIP"></param>
-        /// <param name="serverPort"></param>
-        /// <param name="rconPort"></param>
-        /// <returns></returns>
-        public static string EncodeConnUniqID(string strServerTitle, string strServerIP, int serverPort, int rconPort)
-        {
-            return EncodeShortUrl(strServerTitle + strServerIP + serverPort.ToString() + rconPort.ToString(), 7);
-        }
-        /// <summary>
-        /// 生成资源ID
-        /// </summary>
-        /// <param name="appFileType"></param>
-        /// <param name="strAppEngName"></param>
-        /// <returns></returns>
-        public static string EncodeAppUniqID(int appFileType, string strAppEngName)
-        {
-            return EncodeShortUrl(appFileType.ToString() + strAppEngName, 8);
-        }
-        /// <summary>
-        /// 生成地图ID
-        /// </summary>
-        /// <param name="strMapName"></param>
-        /// <returns></returns>
-        public static string EncodeMapUniqID(string strMapName)
-        {
-            return EncodeShortUrl(strMapName, 8);
-        }
-        /// <summary>
-        /// 生成聊天组ID
-        /// </summary>
-        /// <param name="strChatRoomName"></param>
-        /// <returns></returns>
-        public static string EncodeChatRoomUniqID(string strChatRoomName)
-        {
-            return EncodeShortUrl(strChatRoomName, 5);
-        }
-        /// <summary>
-        /// 生成付费应用ID
-        /// </summary>
-        /// <param name="strAppChsName"></param>
-        /// <param name="strAppEngName"></param>
-        /// <param name="strAppFileName"></param>
-        /// <returns></returns>
-        public static string EncodePaidAppUniqID(string strAppChsName, string strAppEngName, string strAppFileName)
-        {
-            return EncodeShortUrl(strAppChsName + strAppEngName + strAppFileName, 8);
-        }
-        /// <summary>
-        /// 生成物理机房ID
-        /// </summary>
-        /// <param name="strUniqID"></param>
-        /// <returns></returns>
-        public static string EncodeVpsUniqID(string strUniqID)
-        {
-            return EncodeShortUrl(strUniqID, 8);
-        }
-        /// <summary>
-        /// 生成服务商ID
-        /// </summary>
-        /// <param name="strUniqID"></param>
-        /// <returns></returns>
-        public static string EncodePvUniqID(string strUniqID)
-        {
-            return EncodeShortUrl(strUniqID, 10);
-        }
-        /// <summary>
-        /// 生成用户上传记录UniqID
-        /// </summary>
-        /// <returns></returns>
-        public static string EncodeUploadUniqID()
-        {
-            return "UPL" + EncodeUniqID(9999, Guid.NewGuid().ToString()).ToUpper();
         }
         /// <summary>
         /// 生成外部订单号
@@ -348,22 +189,6 @@ namespace Junior.Core.Service.Static
         public static string EncodeOutTradeNo(string strPrefix)
         {
             return strPrefix + EncodeUniqID(9999, Guid.NewGuid().ToString()).ToUpper();
-        }
-        /// <summary>
-        /// 生成微信支付提现批次号
-        /// </summary>
-        /// <returns></returns>
-        public static string EncodeWxpayWithdrawBatchNo()
-        {
-            return "WxpayWithdrawBatch" + EncodeShortUrl("WxpayWithdrawBatch", 8);
-        }
-        /// <summary>
-        /// 生成微信支付提现明细号
-        /// </summary>
-        /// <returns></returns>
-        public static string EncodeWxpayWithdrawDetailNo()
-        {
-            return "WxpayWithdrawDetail" + EncodeShortUrl("WxpayWithdrawDetail", 8);
         }
         /// <summary>
         /// RSA加密
@@ -387,7 +212,7 @@ namespace Junior.Core.Service.Static
         /// </summary>
         /// <param name="fileName">要计算 MD5 值的文件名和路径</param>
         /// <returns>MD5 值16进制字符串</returns>
-        public static string MD5File(string fileName)
+        public static string EncodeMd5FileHash(string fileName)
         {
             return HashFile(fileName, "md5");
         }
@@ -404,7 +229,7 @@ namespace Junior.Core.Service.Static
             FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read);
             byte[] hashBytes = HashData(fs, algName);
             fs.Close();
-            return ByteArrayToHexString(hashBytes);
+            return ConvertService.ByteArrayToHexString(hashBytes);
         }
         /// <summary>
         /// 计算哈希值
@@ -432,21 +257,6 @@ namespace Junior.Core.Service.Static
                 algorithm = MD5.Create();
             }
             return algorithm.ComputeHash(stream);
-        }
-        /// <summary>
-        /// 字节数组转换为16进制表示的字符串
-        /// </summary>
-        private static string ByteArrayToHexString(byte[] buf)
-        {
-            string returnStr = "";
-            if (buf != null)
-            {
-                for (int i = 0; i < buf.Length; i++)
-                {
-                    returnStr += buf[i].ToString("X2");
-                }
-            }
-            return returnStr;
         }
     }
 }

@@ -1,8 +1,8 @@
-﻿using System.Diagnostics;
+﻿using Junior.Core.Extension;
+using System.Diagnostics;
 using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
-using Junior.Core.Service.Static;
 
 namespace Junior.Core.Service.Static
 {
@@ -82,7 +82,7 @@ namespace Junior.Core.Service.Static
         public static string GetWebSourceCode(string strUrl, string strReferer = "")
         {
             WebClient myWebClient = new WebClient();
-            if (!ValidService.IsNull(strReferer))
+            if (!strReferer.IsNull())
             {
                 myWebClient.Headers.Add(HttpRequestHeader.Referer, strReferer);
             }

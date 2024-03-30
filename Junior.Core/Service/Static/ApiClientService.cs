@@ -16,7 +16,7 @@ namespace Junior.Core.Service.Static
         /// <param name="headerList"></param>
         /// <param name="timeOut"></param>
         /// <returns></returns>
-        public static ApiResponse Request(Method reqMethod, string strBaseUrl, string strRouteUrl=null, Dictionary<string, string> queryParam = null, string strBody=null, Dictionary<string,string> headerList = null, int timeOut=3000)
+        public static ApiResponse Request(Method reqMethod, string strBaseUrl, string strRouteUrl = null, Dictionary<string, string> queryParam = null, string strBody = null, Dictionary<string, string> headerList = null, int timeOut = 3000)
         {
             ApiResponse resp = new ApiResponse()
             {
@@ -26,15 +26,15 @@ namespace Junior.Core.Service.Static
             RestClient client = new RestClient(strBaseUrl);
             if (queryParam != null)
             {
-                if(queryParam.Count > 0)
+                if (queryParam.Count > 0)
                 {
                     strRouteUrl += "?";
                 }
                 int index = 0;
-                foreach(KeyValuePair<string, string> kvp in queryParam)
+                foreach (KeyValuePair<string, string> kvp in queryParam)
                 {
                     strRouteUrl += $"{System.Web.HttpUtility.UrlEncode(kvp.Key)}={System.Web.HttpUtility.UrlEncode(kvp.Value)}";
-                    if (index < queryParam.Count-1)
+                    if (index < queryParam.Count - 1)
                     {
                         strRouteUrl += "&";
                     }
@@ -46,7 +46,7 @@ namespace Junior.Core.Service.Static
             request.AddHeader("Content-Type", "application/json");
             if (headerList != null)
             {
-                foreach(KeyValuePair<string,string> kvp in headerList)
+                foreach (KeyValuePair<string, string> kvp in headerList)
                 {
                     request.AddHeader(kvp.Key, kvp.Value);
                 }

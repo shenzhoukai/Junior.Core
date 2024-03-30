@@ -38,9 +38,9 @@ namespace Junior.Core.Service
                 }
                 value = true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                //cliServ.OutputErrorMessage(string.Format("[ZipService] {0}", ex.Message));
+                throw new Exception($"[ZipService] {ex.Message}");
             }
             return value;
         }
@@ -56,14 +56,9 @@ namespace Junior.Core.Service
             var files = Directory.GetFiles(dirPath);
             for (int i = 0; i < files.Length; i++)
             {
-                //如果Contains不支持第二个参数，就用.ToLower()
                 if (filterExtenList == null || (filterExtenList != null && !filterExtenList.Any(d => Path.GetExtension(files[i]).Contains(d, StringComparison.OrdinalIgnoreCase))))
                 {
-                    //获取相对路径作为zip文件中目录路径
                     zip.AddFile(files[i], Path.GetRelativePath(rootPath, dirPath));
-                    //如果没有Path.GetRelativePath方法，可以用下面代码替换
-                    //string relativePath = Path.GetFullPath(dirPath).Replace(Path.GetFullPath(rootPath), "");
-                    //zip.AddFile(files[i], relativePath);
                 }
             }
             var dirs = Directory.GetDirectories(dirPath);

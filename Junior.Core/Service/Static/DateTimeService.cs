@@ -19,7 +19,7 @@ namespace Junior.Core.Service.Static
         /// <returns></returns>
         public static string Today()
         {
-            return ToDateString(DateTime.Now);
+            return DateTime.Now.ToDateString();
         }
         /// <summary>
         /// 获取当前日期的Dt
@@ -38,17 +38,6 @@ namespace Junior.Core.Service.Static
             return DateTime.Now.ToTimeStamp();
         }
         /// <summary>
-        /// 字符串转日期格式
-        /// </summary>
-        /// <param name="strDt"></param>
-        /// <returns></returns>
-        public static DateTime ToDt(string strDt)
-        {
-            strDt = strDt.Replace("-0", "/");
-            strDt = strDt.Replace("-", "/");
-            return DateTime.Parse(strDt);
-        }
-        /// <summary>
         /// 时间戳转日期格式
         /// </summary>
         /// <param name="timeStamp"></param>
@@ -64,7 +53,7 @@ namespace Junior.Core.Service.Static
             }
             catch
             {
-                return ToDt("2000-01-01 00:00:00");
+                return "2000-01-01 00:00:00".ToDt();
             }
         }
         /// <summary>
@@ -73,25 +62,7 @@ namespace Junior.Core.Service.Static
         /// <returns></returns>
         public static DateTime Dt2000()
         {
-            return ToDt("2000-01-01 00:00:00");
-        }
-        /// <summary>
-        /// 日期转换为日期时间字符串，yyyy-MM-dd HH:mm:ss
-        /// </summary>
-        /// <param name="dt"></param>
-        /// <returns></returns>
-        public static string ToDtString(DateTime dt)
-        {
-            return dt.ToString(Const.DateTimeFormat);
-        }
-        /// <summary>
-        /// 日期转换为日期字符串，yyyy-MM-dd
-        /// </summary>
-        /// <param name="dt"></param>
-        /// <returns></returns>
-        public static string ToDateString(DateTime dt)
-        {
-            return dt.ToString(Const.DateFormat);
+            return "2000-01-01 00:00:00".ToDt();
         }
         /// <summary>
         /// 获取当前日期的年份，0000
@@ -388,28 +359,6 @@ namespace Junior.Core.Service.Static
             TimeSpan ts = DiffTimeSpan(dtStart, dtEnd);
             ms = ts.TotalMilliseconds;
             return ms;
-        }
-        /// <summary>
-        /// 获取日期格式的日期部分字符串
-        /// </summary>
-        /// <param name="dt"></param>
-        /// <returns></returns>
-        public static string GetDateString(DateTime dt)
-        {
-            string value = string.Empty;
-            value = dt.ToString(Const.DateFormat);
-            return value;
-        }
-        /// <summary>
-        /// 获取日期格式的全部字符串
-        /// </summary>
-        /// <param name="dt"></param>
-        /// <returns></returns>
-        public static string GetDateTimeString(DateTime dt)
-        {
-            string value = string.Empty;
-            value = dt.ToString(Const.DateTimeFormat);
-            return value;
         }
         /// <summary>
         /// 判断时间是否在范围内
