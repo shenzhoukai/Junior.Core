@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Junior.Core.Service.Static
 {
@@ -17,6 +18,11 @@ namespace Junior.Core.Service.Static
             }
             return JsonConvert.SerializeObject(obj);
         }
+        /// <summary>
+        /// 对象转安全Json字符串
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
         public static string ToSafeJson(this object obj)
         {
             if (obj == null)
@@ -26,21 +32,27 @@ namespace Junior.Core.Service.Static
             return JsonConvert.SerializeObject(obj).Replace("\"", "\\\"");
         }
         /// <summary>
-        /// Json字符串转换为实体对象
+        /// 从Json字符串的对象中获取值
         /// </summary>
-        /// <typeparam name="T">对象</typeparam>
-        /// <param name="strJson">Json字符串</param>
+        /// <param name="strJson"></param>
+        /// <param name="strKey"></param>
         /// <returns></returns>
-        public static T FromJson<T>(this string strJson)
+        public static string GetValue(string strJson, string strKey)
         {
-            try
-            {
-                return JsonConvert.DeserializeObject<T>(strJson);
-            }
-            catch
-            {
-                return default(T);
-            }
+            JObject jo = (JObject)JsonConvert.DeserializeObject(strJson);
+            return jo[strKey].ToString();
+        }
+        /// <summary>
+        /// 从Json字符串的数组中获取值
+        /// </summary>
+        /// <param name="strJson"></param>
+        /// <param name="index"></param>
+        /// <param name="strKey"></param>
+        /// <returns></returns>
+        public static string GetValue(string strJson, int index, string strKey)
+        {
+            JArray ja = (JArray)JsonConvert.DeserializeObject(strJson);
+            return ja[index][strKey].ToString();
         }
     }
 }

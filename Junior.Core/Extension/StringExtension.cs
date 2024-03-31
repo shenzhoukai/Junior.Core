@@ -1,4 +1,5 @@
 ﻿using Junior.Core.Service.Static;
+using Newtonsoft.Json;
 
 namespace Junior.Core.Extension
 {
@@ -337,6 +338,11 @@ namespace Junior.Core.Extension
                 return false;
             }
         }
+        /// <summary>
+        /// 检测是否包含首尾空格
+        /// </summary>
+        /// <param name="strRaw"></param>
+        /// <returns></returns>
         public static bool ContainsFrontEndSpace(this string strRaw)
         {
             if (strRaw != strRaw.Trim())
@@ -346,6 +352,23 @@ namespace Junior.Core.Extension
             else
             {
                 return false;
+            }
+        }
+        /// <summary>
+        /// Json字符串转换为实体对象
+        /// </summary>
+        /// <typeparam name="T">对象</typeparam>
+        /// <param name="strJson">Json字符串</param>
+        /// <returns></returns>
+        public static T FromJson<T>(this string strJson)
+        {
+            try
+            {
+                return JsonConvert.DeserializeObject<T>(strJson);
+            }
+            catch
+            {
+                return default(T);
             }
         }
     }

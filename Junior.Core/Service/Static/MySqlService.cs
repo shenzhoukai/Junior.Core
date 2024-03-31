@@ -1,6 +1,5 @@
 ﻿using Junior.Core.Extension;
 using System.Data;
-using System.Data.SqlClient;
 
 namespace Junior.Core.Service.Static
 {
@@ -37,7 +36,7 @@ namespace Junior.Core.Service.Static
         /// <param name="strSql"></param>
         /// <param name="strConn"></param>
         /// <returns></returns>
-        public static DataSet Query(string strSql, string strConn="")
+        public static DataSet Query(string strSql, string strConn = "")
         {
             DataSet dataSet = new DataSet();
             if (!IsEnable())

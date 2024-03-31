@@ -1,6 +1,5 @@
 ﻿using Junior.Core.Extension;
 using System.Data;
-using System.Data.SqlClient;
 
 namespace Junior.Core.Service.Static
 {
