@@ -132,7 +132,10 @@ namespace Junior.Core.Service.Static
                 byte[] bytes = Convert.FromBase64String(strData);
                 strRaw = Encoding.UTF8.GetString(bytes);
             }
-            catch { }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
             return strRaw;
         }
         /// <summary>

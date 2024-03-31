@@ -132,7 +132,10 @@ namespace Junior.Core.Service.Static
                 if (strNewJwtToken == strJwtToken)
                     value = true;
             }
-            catch { }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
             return value;
         }
     }

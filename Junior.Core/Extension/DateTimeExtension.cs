@@ -16,8 +16,10 @@ namespace Junior.Core.Extension
             {
                 timeStamp = (dateTime.Ticks - TimeZoneInfo.ConvertTimeFromUtc(new DateTime(1970, 1, 1), TimeZoneInfo.Local).Ticks) / 10000000;
             }
-            catch
-            { }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
             return timeStamp;
         }
         /// <summary>

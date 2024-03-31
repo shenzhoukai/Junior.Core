@@ -9,14 +9,16 @@
         /// <returns></returns>
         public static DateTime ToDateTime(this long timeStamp)
         {
+            DateTime dt = new DateTime(2000, 1, 1, 0, 0, 0);
             try
             {
-                return DateTimeOffset.FromUnixTimeSeconds(timeStamp).LocalDateTime;
+                dt = DateTimeOffset.FromUnixTimeSeconds(timeStamp).LocalDateTime;
             }
-            catch
+            catch (Exception ex)
             {
-                return new DateTime(2000, 1, 1, 0, 0, 0);
+                throw new Exception(ex.Message);
             }
+            return dt;
         }
         /// <summary>
         /// 判断是否银行卡号

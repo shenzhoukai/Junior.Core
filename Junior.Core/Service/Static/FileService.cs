@@ -116,7 +116,7 @@ namespace Junior.Core.Service.Static
                 }
                 catch
                 {
-                    //msgServ.ShowError("错误:\r\n无法使用以下打开方式来打开此文件！\r\n" + Path.GetFileName(path_opener));
+                    throw new Exception("错误:\r\n无法使用以下打开方式来打开此文件！\r\n" + Path.GetFileName(path_opener));
                 }
             }
             else
@@ -127,7 +127,7 @@ namespace Junior.Core.Service.Static
                 }
                 catch
                 {
-                    //msgServ.ShowError("错误:\r\n无法使用系统默认打开方式来打开此文件！");
+                    throw new Exception("错误:\r\n无法使用系统默认打开方式来打开此文件！");
                 }
             }
         }
@@ -198,7 +198,10 @@ namespace Junior.Core.Service.Static
                     File.Delete(filepath);
                 }
             }
-            catch { }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
         public static byte[] FileToByteArray(string filePath)
         {
@@ -216,7 +219,10 @@ namespace Junior.Core.Service.Static
             {
                 File.Move(fileOldPath, fileNewPath);
             }
-            catch { }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
         public static void CheckDir(string url, bool root)
         {
