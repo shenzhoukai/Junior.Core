@@ -1,80 +1,149 @@
 ﻿using Junior.Core.Extension;
 using StackExchange.Redis;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Junior.Core.Service.Static
 {
-    public class RedisService
+    public static class RedisService
     {
-        private ConnectionMultiplexer redis = null;
-        private IDatabase database;
         /// <summary>
-        /// 初始化链接Redis
+        /// Redis是否开启
         /// </summary>
-        public RedisService()
+        /// <returns></returns>
+        private static bool IsEnable()
         {
-            string strRedisUrl = $"{ConfigService.GetValue("RedisHost")}:{ConfigService.GetValue("RedisPort")}";
-            string strRedisPwd = ConfigService.GetValue("RedisPwd");
-            if(strRedisPwd.IsNull())
+            string strRedisEnable = ConfigService.GetValue("RedisEnable");
+            bool tmp = bool.TryParse(strRedisEnable, out bool isEnable);
+            if (tmp)
             {
-                redis = ConnectionMultiplexer.Connect(strRedisUrl);
+                return isEnable;
             }
             else
             {
-                redis = ConnectionMultiplexer.Connect($"{strRedisUrl},password={strRedisPwd}");
+                return false;
             }
-            bool tmp = int.TryParse(ConfigService.GetValue("RedisDbIndex"), out int dbIndex);
-            if(tmp)
-                dbIndex = -1;
-            database = redis.GetDatabase(dbIndex);
+        }
+        /// <summary>
+        /// 生成Redis连接字符串
+        /// </summary>
+        /// <returns></returns>
+        private static string RedisConnString()
+        {
+            string strRedisUrl = $"{ConfigService.GetValue("RedisHost")}:{ConfigService.GetValue("RedisPort")}";
+            string strRedisPwd = ConfigService.GetValue("RedisPwd");
+            if (strRedisPwd.IsNull())
+            {
+                return strRedisUrl;
+            }
+            else
+            {
+                return $"{strRedisUrl},password={strRedisPwd}";
+            }
         }
         /// <summary>
         /// 获取键值
         /// </summary>
         /// <param name="strKey"></param>
         /// <returns></returns>
-        public string GetValue(string strKey)
+        public static string GetValue(string strKey)
         {
-            return database.StringGet(strKey);
+            if (!IsEnable())
+                return string.Empty;
+            string strValue = string.Empty;
+            using (ConnectionMultiplexer redis = ConnectionMultiplexer.Connect(RedisConnString()))
+            {
+                bool tmp = int.TryParse(ConfigService.GetValue("RedisDbIndex"), out int dbIndex);
+                if (tmp)
+                    dbIndex = -1;
+                IDatabase database = redis.GetDatabase(dbIndex);
+                //Redis操作 - 开始
+                strValue = database.StringGet(strKey);
+                //Redis操作 - 结束
+                redis.Close();
+            }
+            return strValue;
         }
         /// <summary>
         /// 设置键值
         /// </summary>
         /// <param name="strKey"></param>
         /// <param name="strValue"></param>
-        public void SetValue(string strKey, string strValue)
+        public static void SetValue(string strKey, string strValue)
         {
-            database.StringSet(strKey, strValue);
+            if (!IsEnable())
+                return;
+            using (ConnectionMultiplexer redis = ConnectionMultiplexer.Connect(RedisConnString()))
+            {
+                bool tmp = int.TryParse(ConfigService.GetValue("RedisDbIndex"), out int dbIndex);
+                if (tmp)
+                    dbIndex = -1;
+                IDatabase database = redis.GetDatabase(dbIndex);
+                //Redis操作 - 开始
+                database.StringSet(strKey, strValue);
+                //Redis操作 - 结束
+                redis.Close();
+            }
         }
         /// <summary>
         /// 删除键值
         /// </summary>
         /// <param name="strKey"></param>
-        public void DeleteKey(string strKey)
+        public static void DeleteKey(string strKey)
         {
-            database.KeyDelete(strKey);
+            if (!IsEnable())
+                return;
+            using (ConnectionMultiplexer redis = ConnectionMultiplexer.Connect(RedisConnString()))
+            {
+                bool tmp = int.TryParse(ConfigService.GetValue("RedisDbIndex"), out int dbIndex);
+                if (tmp)
+                    dbIndex = -1;
+                IDatabase database = redis.GetDatabase(dbIndex);
+                //Redis操作 - 开始
+                database.KeyDelete(strKey);
+                //Redis操作 - 结束
+                redis.Close();
+            }
         }
         /// <summary>
         /// 设置Key的过期时间
         /// </summary>
         /// <param name="strKey"></param>
         /// <param name="sec"></param>
-        public void SetKeyExpire(string strKey, int sec)
+        public static void SetKeyExpire(string strKey, int sec)
         {
-            database.KeyExpire(strKey, TimeSpan.FromSeconds(sec));
+            if (!IsEnable())
+                return;
+            using (ConnectionMultiplexer redis = ConnectionMultiplexer.Connect(RedisConnString()))
+            {
+                bool tmp = int.TryParse(ConfigService.GetValue("RedisDbIndex"), out int dbIndex);
+                if (tmp)
+                    dbIndex = -1;
+                IDatabase database = redis.GetDatabase(dbIndex);
+                //Redis操作 - 开始
+                database.KeyExpire(strKey, TimeSpan.FromSeconds(sec));
+                //Redis操作 - 结束
+                redis.Close();
+            }
         }
         /// <summary>
         /// 设置hashset
         /// </summary>
         /// <param name="strKey"></param>
         /// <param name="hashEntries"></param>
-        public void SetHash(string strKey, HashEntry[] hashEntries)
+        public static void SetHash(string strKey, HashEntry[] hashEntries)
         {
-            database.HashSet(strKey, hashEntries);
+            if (!IsEnable())
+                return;
+            using (ConnectionMultiplexer redis = ConnectionMultiplexer.Connect(RedisConnString()))
+            {
+                bool tmp = int.TryParse(ConfigService.GetValue("RedisDbIndex"), out int dbIndex);
+                if (tmp)
+                    dbIndex = -1;
+                IDatabase database = redis.GetDatabase(dbIndex);
+                //Redis操作 - 开始
+                database.HashSet(strKey, hashEntries);
+                //Redis操作 - 结束
+                redis.Close();
+            }
         }
     }
 }

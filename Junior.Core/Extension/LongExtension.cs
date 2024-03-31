@@ -28,14 +28,14 @@
         public static bool IsBankCardNum(this long cardNum)
         {
             string strCardNum = cardNum.ToString();
-            if(strCardNum.Length >= 16 && strCardNum.Length <= 19)
+            if (strCardNum.Length >= 16 && strCardNum.Length <= 19)
             {
                 return true;
             }
             else
             {
                 return false;
-            } 
+            }
         }
     }
 }

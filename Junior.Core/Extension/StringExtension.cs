@@ -1,5 +1,4 @@
 ﻿using Junior.Core.Service.Static;
-using System.IO;
 
 namespace Junior.Core.Extension
 {
@@ -312,10 +311,10 @@ namespace Junior.Core.Extension
             if (strCardNum.IsNull())
                 return false;
             bool value = IsNumber(strCardNum);
-            if(value)
+            if (value)
             {
                 value = long.TryParse(strCardNum, out long cardNum);
-                if(value)
+                if (value)
                 {
                     value = cardNum.IsBankCardNum();
                 }
