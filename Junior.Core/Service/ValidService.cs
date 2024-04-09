@@ -1,6 +1,6 @@
-﻿namespace Junior.Core.Service.Static
+﻿namespace Junior.Core.Service
 {
-    public static class ValidService
+    public class ValidService
     {
         /// <summary>
         /// 验证字符是否被允许

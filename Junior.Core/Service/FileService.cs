@@ -4,9 +4,9 @@ using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Junior.Core.Service.Static
+namespace Junior.Core.Service
 {
-    public static class FileService
+    public class FileService
     {
         /// <summary>
         /// 下载文件（异步）

@@ -1,9 +1,9 @@
 ﻿using Junior.Core.Extension;
 using StackExchange.Redis;
 
-namespace Junior.Core.Service.Static
+namespace Junior.Core.Service
 {
-    public static class RedisService
+    public class RedisService
     {
         /// <summary>
         /// Redis是否开启
@@ -57,6 +57,30 @@ namespace Junior.Core.Service.Static
                 IDatabase database = redis.GetDatabase(dbIndex);
                 //Redis操作 - 开始
                 strValue = database.StringGet(strKey);
+                //Redis操作 - 结束
+                redis.Close();
+            }
+            return strValue;
+        }
+        /// <summary>
+        /// 获取Hash键值
+        /// </summary>
+        /// <param name="strHash"></param>
+        /// <param name="strKey"></param>
+        /// <returns></returns>
+        public static string GetHashValue(string strHash, string strKey)
+        {
+            if (!IsEnable())
+                return string.Empty;
+            string strValue = string.Empty;
+            using (ConnectionMultiplexer redis = ConnectionMultiplexer.Connect(RedisConnString()))
+            {
+                bool tmp = int.TryParse(ConfigService.GetValue("RedisDbIndex"), out int dbIndex);
+                if (tmp)
+                    dbIndex = -1;
+                IDatabase database = redis.GetDatabase(dbIndex);
+                //Redis操作 - 开始
+                strValue = database.HashGet(strKey, strHash);
                 //Redis操作 - 结束
                 redis.Close();
             }

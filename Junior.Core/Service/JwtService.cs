@@ -2,9 +2,9 @@
 using Junior.Core.Global;
 using Junior.Core.ServiceModel.JwtToken;
 
-namespace Junior.Core.Service.Static
+namespace Junior.Core.Service
 {
-    public static class JwtService
+    public class JwtService
     {
         /// <summary>
         /// 生成JWT的头部

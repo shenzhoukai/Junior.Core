@@ -1,18 +1,18 @@
 ﻿using Junior.Core.Extension;
 using System.Data;
 
-namespace Junior.Core.Service.Static
+namespace Junior.Core.Service
 {
-    public static class MySqlService
+    public class SqliteService
     {
         /// <summary>
-        /// MySql是否开启
+        /// Sqlite是否开启
         /// </summary>
         /// <returns></returns>
         private static bool IsEnable()
         {
-            string strMySqlEnable = ConfigService.GetValue("MySqlEnable");
-            bool tmp = bool.TryParse(strMySqlEnable, out bool isEnable);
+            string strSqliteEnable = ConfigService.GetValue("SqliteEnable");
+            bool tmp = bool.TryParse(strSqliteEnable, out bool isEnable);
             if (tmp)
             {
                 return isEnable;
@@ -23,12 +23,15 @@ namespace Junior.Core.Service.Static
             }
         }
         /// <summary>
-        /// MySql连接字符串
+        /// Sqlite连接字符串
         /// </summary>
         /// <returns></returns>
-        private static string MySqlConnString()
+        private static string SqliteConnString()
         {
-            return $"server={ConfigService.GetValue("MySqlHost")};database={ConfigService.GetValue("MySqlDb")};user={ConfigService.GetValue("MySqlUser")};password={ConfigService.GetValue("MySqlPwd")};";
+            string strConn = $"Data Source={ConfigService.GetValue("SqliteFilePath")};Version=3;";
+            if (!ConfigService.GetValue("SqlitePwd").IsNull())
+                strConn += $"Password={ConfigService.GetValue("SqlitePwd")};";
+            return strConn;
         }
         /// <summary>
         /// 查询
@@ -45,7 +48,7 @@ namespace Junior.Core.Service.Static
                 return dataSet;
             if (strConn.IsNull())
             {
-                strConn = MySqlConnString();
+                strConn = SqliteConnString();
             }
             return SqlService.Query(strSql, strConn);
         }

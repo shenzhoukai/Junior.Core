@@ -3,9 +3,9 @@ using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 
-namespace Junior.Core.Service.Static
+namespace Junior.Core.Service
 {
-    public static class CryptoService
+    public class CryptoService
     {
         /// <summary>
         /// 生成当前的SaasToken

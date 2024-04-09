@@ -1,9 +1,9 @@
 ﻿using Junior.Core.Extension;
 using RestSharp;
 
-namespace Junior.Core.Service.Static
+namespace Junior.Core.Service
 {
-    public static class ApiClientService
+    public class ApiClientService
     {
         /// <summary>
         /// 发起API请求

@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 
 namespace Junior.Core.Service
 {
-    public static class ZipService
+    public class ZipService
     {
         /// <summary>
         /// 压缩文件/文件夹

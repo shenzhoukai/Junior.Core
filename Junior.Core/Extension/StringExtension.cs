@@ -1,4 +1,4 @@
-﻿using Junior.Core.Service.Static;
+﻿using Junior.Core.Service;
 using Newtonsoft.Json;
 
 namespace Junior.Core.Extension

@@ -1,8 +1,8 @@
 ﻿using System.Configuration;
 
-namespace Junior.Core.Service.Static
+namespace Junior.Core.Service
 {
-    public static class ConfigService
+    public class ConfigService
     {
         /// <summary>
         /// 获取Config的值

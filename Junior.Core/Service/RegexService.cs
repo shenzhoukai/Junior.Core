@@ -1,8 +1,8 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace Junior.Core.Service.Static
+namespace Junior.Core.Service
 {
-    public static class RegexService
+    public class RegexService
     {
         /// <summary>
         /// 判断正则表达式

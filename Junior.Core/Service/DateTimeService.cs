@@ -1,9 +1,9 @@
 ﻿using Junior.Core.Extension;
 using Junior.Core.Global;
 
-namespace Junior.Core.Service.Static
+namespace Junior.Core.Service
 {
-    public static class DateTimeService
+    public class DateTimeService
     {
         /// <summary>
         /// 获取当前日期的字符串

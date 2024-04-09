@@ -1,8 +1,8 @@
 ﻿using System.Reflection;
 
-namespace Junior.Core.Service.Static
+namespace Junior.Core.Service
 {
-    public static class ConvertService
+    public class ConvertService
     {
         /// <summary>
         /// 字节数组转换为16进制表示的字符串

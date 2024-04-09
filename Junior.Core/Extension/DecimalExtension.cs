@@ -1,4 +1,4 @@
-﻿using Junior.Core.Service.Static;
+﻿using Junior.Core.Service;
 
 namespace Junior.Core.Extension
 {

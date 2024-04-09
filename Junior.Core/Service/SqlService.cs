@@ -2,9 +2,9 @@
 using System.Data;
 using System.Data.SqlClient;
 
-namespace Junior.Core.Service.Static
+namespace Junior.Core.Service
 {
-    public static class SqlService
+    public class SqlService
     {
         /// <summary>
         /// 查询

@@ -1,9 +1,9 @@
 ﻿using Junior.Core.Extension;
 using System.Data;
 
-namespace Junior.Core.Service.Static
+namespace Junior.Core.Service
 {
-    public static class SqlServerService
+    public class SqlServerService
     {
         /// <summary>
         /// SqlServer是否开启
